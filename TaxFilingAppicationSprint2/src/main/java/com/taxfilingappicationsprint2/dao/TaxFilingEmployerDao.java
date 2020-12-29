@@ -15,7 +15,7 @@ public interface TaxFilingEmployerDao extends JpaRepository<Employer,Long> {
 	@Query("SELECT e FROM Employer e where e.organization=:newOrgName")
 	Employer findEmployer(String newOrgName);
 
-	@Query("SELECT e FROM Employer e where e.employerId=:id")
-	Employer findEmployer(Long id);
+  /*@Query("SELECT e FROM Employer e where e.employerId=:id")
+	Employer findEmployer(Long id);*/
 
 }

@@ -72,7 +72,8 @@ public class TaxFilingServiceImpl implements TaxFilngService {
 
 	@Override
 	public Customer findCustomer(long id) {
-		return cust.findCustomer(id);
+		return cust.findById(id).orElse(null);
+		//return cust.findCustomer(id);
 	}
 
 	@Override
@@ -88,7 +89,8 @@ public class TaxFilingServiceImpl implements TaxFilngService {
 
 	@Override
 	public Employer findEmployer(Long id) {
-		return emp.findEmployer(id);
+		return emp.findById(id).orElse(null);
+		//return emp.findEmployer(id);
 	}
 
 	@Override
@@ -99,7 +101,8 @@ public class TaxFilingServiceImpl implements TaxFilngService {
 
 	@Override
 	public Representative findRepresentative(Long id) {
-		return rep.findRepresentative(id);
+		return rep.findById(id).orElse(null);
+		//return rep.findRepresentative(id);
 	}
 
 	@Override
@@ -110,12 +113,31 @@ public class TaxFilingServiceImpl implements TaxFilngService {
 
 	@Override
 	public Admin findAdmin(String id) {
-		return admin.findAdmin(id);
+		return admin.findById(id).orElse(null);
+		//return admin.findAdmin(id);
 	}
 
 	@Override
 	public int updateAdmin(Admin a) {
 		admin.save(a);
+		return 1;
+	}
+
+	@Override
+	public int removeCustomer(Long id) {
+		cust.deleteById(id);
+		return 1;
+	}
+
+	@Override
+	public int removeEmployer(Long id) {
+		emp.deleteById(id);
+		return 1;
+	}
+
+	@Override
+	public int removeRepresentative(Long id) {
+		rep.deleteById(id);	
 		return 1;
 	}
 }

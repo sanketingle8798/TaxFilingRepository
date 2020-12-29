@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -144,7 +145,7 @@ public class TaxFilingController {
 	}
 	
 	@PutMapping("/editEmployer/{id},{editChoice},{newValue}")
-	@ApiOperation(value="1.Email  2.Password  3.Contact Number")
+	@ApiOperation("****1.Email  2.Password  3.Contact Number****")
 	public String upadteEmployer(@PathVariable("id")Long id,@PathVariable("editChoice")Integer choice,
 			@PathVariable("newValue")String newValue) {
 		
@@ -256,5 +257,25 @@ public class TaxFilingController {
 	return res;
 }
 	
+
+	@DeleteMapping("/removeActor/{userChoice}/{id}")
+	@ApiOperation("****Choice= 1.Customer 2.Employer  3.Representative****")
+	public String removeActor(@PathVariable("userChoice") int choice,@PathVariable("id") Long id) {
+		int i=0;
+		String res[]=new String[2];
+		switch(choice) {
+		case 1: i=tfs.removeCustomer(id);
+				res[0]="Customer";res[1]=Long.toString(id);
+				break;
+		case 2: i=tfs.removeEmployer(id);
+				res[0]="Employer";res[1]=Long.toString(id);	
+				break;
+		case 3: i=tfs.removeRepresentative(id);
+				res[0]="Representative";res[1]=Long.toString(id);	
+				break;
+		}
+		return res[0]+" with id "+res[1]+" has been deleted succesfully";
+	}
+
 }
 

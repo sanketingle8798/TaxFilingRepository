@@ -50,4 +50,12 @@ public interface TaxFilngService {
 
 	
 	
+	int removeCustomer(Long id);
+
+	int removeEmployer(Long id);
+
+	int removeRepresentative(Long id);
+
+	
+	
 }

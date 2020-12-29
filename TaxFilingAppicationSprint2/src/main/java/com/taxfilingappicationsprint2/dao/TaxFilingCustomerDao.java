@@ -12,6 +12,6 @@ public interface TaxFilingCustomerDao extends JpaRepository<Customer,Long>{
 	@Query("SELECT c FROM Customer c where c.customerId=:customerId and c.password=:password")
 	Customer loginCustomer(Long customerId,String password);
 
-	@Query("SELECT c FROM Customer c where c.customerId=:id")
-	Customer findCustomer(long id);
+	/*@Query("SELECT c FROM Customer c where c.customerId=:id")
+	Customer findCustomer(long id); */
 }

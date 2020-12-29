@@ -12,7 +12,7 @@ public interface TaxFilingRepresentativeDao extends JpaRepository<Representative
 	@Query("SELECT r FROM Representative r where r.representativeId=:id and r.password=:password")
 	public Representative loginRepresentative(long id, String password);
 
-	@Query("SELECT r FROM Representative r where r.representativeId=:id")
-	public Representative findRepresentative(Long id);
+	/*@Query("SELECT r FROM Representative r where r.representativeId=:id")
+	public Representative findRepresentative(Long id);*/
 
 }
