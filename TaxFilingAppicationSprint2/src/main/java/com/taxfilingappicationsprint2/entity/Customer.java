@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 @Entity
@@ -29,6 +29,8 @@ public class Customer {
 	private String pan;
 	private String contactNo;
 	private String accountNo;
+	
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private LocalDate dateOfBirth;
 	private String maritalStatus;
 	private String address;
