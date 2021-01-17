@@ -8,6 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.PositiveOrZero;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -15,31 +21,82 @@ public class TaxForm {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long taxformId;
+
+	@NotNull
+	@Column(unique = true)
+	@NotBlank(message = "PAN can not be empty")
+	@Pattern(regexp = "(^$|[A-Z]{5}[0-9]{4}[A-Z]{1})", message = "Enter valid PAN")
 	private String pan;
+
+	@NotNull
+	@PositiveOrZero(message = "Total Income Salary must be greater than or equal to 0")
 	private double totalIncomeSalary;
+
+	@NotNull
+	@PositiveOrZero(message = "HRA must be greater than or equal to 0")
 	private double hra;
+
+	@NotNull
+	@PositiveOrZero(message = "Other income must be greater than or equal to 0")
 	private double otherIncome;
+
+	@NotNull
+	@PositiveOrZero(message = "Interest Income must be greater than or equal to 0")
 	private double interestIncome;
+
+	@NotNull
+	@PositiveOrZero(message = "REntal Income must be greater than or equal to 0")
 	private double rentalIncome;
+
+	@NotNull
+	@PositiveOrZero(message = "PPF must be greater than or equal to 0")
 	private double ppf;
+
+	@NotNull
+	@PositiveOrZero(message = "Medical Insurance must be greater than or equal to 0")
 	private double medicalInsurance;
-	private double educaionLoan;
+
+	@NotNull
+	@PositiveOrZero(message = "Education Loan must be greater than or equal to 0")
+	private double educationLoan;
+
+	@NotNull
+	@PositiveOrZero(message = "House Loan must be greater than or equal to 0")
 	private double houseLoan;
+
+	@NotNull
+	@PositiveOrZero(message = "NPS must be greater than or equal to 0")
 	private double nps;
+
+	@NotNull
+	@PositiveOrZero(message = "Savings Interest must be greater than or equal to 0")
 	private double savingsInterest;
+
+	@NotNull
+	@PositiveOrZero(message = "TDS must be greater than or equal to 0")
 	private double tds;
+
+	@NotNull
+	@PositiveOrZero(message = "Payable Tax must be greater than or equal to 0")
 	private double payableTax;
+
+	@NotNull
 	private String extraInfo;
-	@Column(columnDefinition = " varchar(255) default 'pending'")
+
+	@NotNull
+	@NotBlank
 	private String verifiedStatus;
 
+	@JsonIgnore
 	@OneToOne(mappedBy = "taxForm")
 	private Customer customer;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "representativeId_t")
 	private Representative representative_t;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "email_t")
 	private Admin admin_t;
@@ -116,12 +173,12 @@ public class TaxForm {
 		this.medicalInsurance = medicalInsurance;
 	}
 
-	public double getEducaionLoan() {
-		return educaionLoan;
+	public double getEducationLoan() {
+		return educationLoan;
 	}
 
-	public void setEducaionLoan(double educaionLoan) {
-		this.educaionLoan = educaionLoan;
+	public void setEducationLoan(double educationLoan) {
+		this.educationLoan = educationLoan;
 	}
 
 	public double getHouseLoan() {

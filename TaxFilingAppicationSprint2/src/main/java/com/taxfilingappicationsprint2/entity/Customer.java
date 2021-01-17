@@ -3,6 +3,7 @@ package com.taxfilingappicationsprint2.entity;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,8 +13,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -21,26 +29,60 @@ public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long customerId;
+
+	@NotNull
+	@NotBlank(message = "Name can not be empty")
+	@Size(min = 2, max = 30)
 	private String name;
+
+	@NotNull(message = "Email can not be empty")
+	//@Column(unique = true)
+	@Email(message = "Enter valid email id")
 	private String email;
+
+	@NotNull
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", message = "Password must contain minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character")
 	private String password;
-	private String securityQuestion;
-	private String securityAnswer;
-	private String pan;
-	private String contactNo;
-	private String accountNo;
 	
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@NotNull
+	@NotBlank(message = "Security question can not be empty")
+	private String securityQuestion;
+
+	@NotNull
+	@NotBlank(message = "Security answer can not be empty")
+	private String securityAnswer;
+
+	@NotNull
+	@Column(unique = true)
+	@NotBlank(message = "PAN can not be empty")
+	@Pattern(regexp = "(^$|[A-Z]{5}[0-9]{4}[A-Z]{1})", message = "Enter valid PAN")
+	private String pan;
+
+	@NotNull
+	@Pattern(regexp = "(^$|[0-9]{10})", message = "Contact number should contain exactly 10 digits")
+	private String contactNo;
+
+	@NotNull
+	@Pattern(regexp = "(^$|[0-9]{12})", message = "Account number should contain exactly 12 digits")
+	private String accountNo;
+
+	@NotNull
+	@JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
+	@Past(message = "Date of Birth can not be in future")
 	private LocalDate dateOfBirth;
+
 	private String maritalStatus;
 	private String address;
+
+	@NotNull
 	private boolean isEmployee;
 
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "employerId")
-	//@JsonManagedReference
 	private Employer employer;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "email_c")
 	private Admin admin_c;
@@ -49,6 +91,7 @@ public class Customer {
 	@JoinColumn(name = "taxFormId")
 	private TaxForm taxForm;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "customer")
 	private List<Notice> notices;
 

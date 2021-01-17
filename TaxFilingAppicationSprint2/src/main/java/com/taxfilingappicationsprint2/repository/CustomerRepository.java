@@ -21,4 +21,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
 	@Query("SELECT c FROM Customer c where c.customerId=:customerId and c.password=:password")
 	Customer loginCustomer(Long customerId, String password);
+	
+	@Query("SELECT c FROM Customer c where c.taxForm.taxformId=:taxformId")
+	Customer getCustomerByTaxFormId(Long taxformId);
 }

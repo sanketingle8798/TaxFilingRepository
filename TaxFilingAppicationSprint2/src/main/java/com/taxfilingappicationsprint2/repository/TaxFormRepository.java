@@ -1,5 +1,7 @@
 package com.taxfilingappicationsprint2.repository;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,4 +25,10 @@ public interface TaxFormRepository extends JpaRepository<TaxForm, Long> {
 	@Modifying
 	@Query("update TaxForm t set t.verifiedStatus=:status where t.taxformId=:taxformId")
 	int updateTaxForm(long taxformId, String status);
+
+	@Query("select t from TaxForm t where t.verifiedStatus='pending'")
+	List<TaxForm> getTaxFormsForRepresentative();
+
+	@Query("select t from TaxForm t where t.verifiedStatus='approvePending'")
+	List<TaxForm> getTaxFormsForAdmin();
 }

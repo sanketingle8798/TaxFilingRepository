@@ -1,0 +1,39 @@
+package com.taxfilingappicationsprint2.Exception;
+
+public class EntityNotFoundException extends RuntimeException {
+	private static final long serialVersionUID = 1L;
+	private final String message;
+	private final String details;
+	private final String hint;
+	private final String nextActions;
+	private final String support;
+
+	public EntityNotFoundException(String message, String details, String hint, String nextActions, String support) {
+		this.message = message;
+		this.details = details;
+		this.hint = hint;
+		this.nextActions = nextActions;
+		this.support = support;
+	}
+
+	@Override
+	public String getMessage() {
+		return message;
+	}
+
+	public String getDetails() {
+		return details;
+	}
+
+	public String getHint() {
+		return hint;
+	}
+
+	public String getNextActions() {
+		return nextActions;
+	}
+
+	public String getSupport() {
+		return support;
+	}
+}

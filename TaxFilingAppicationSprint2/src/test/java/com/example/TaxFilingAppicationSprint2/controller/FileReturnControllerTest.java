@@ -50,7 +50,7 @@ class FileReturnControllerTest {
 		tf.setRentalIncome(400);
 		tf.setPpf(500);
 		tf.setMedicalInsurance(2000);
-		tf.setEducaionLoan(0);
+		tf.setEducationLoan(0);
 		tf.setHouseLoan(5000);
 		tf.setNps(100);
 		tf.setSavingsInterest(300);

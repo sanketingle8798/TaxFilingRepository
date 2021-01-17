@@ -6,26 +6,36 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Admin {
 	@Id
+	@Email(message = "Email can not be empty")
 	private String email;
+
 	private String password;
-	
-	@OneToMany(mappedBy = "admin_c",cascade=CascadeType.ALL)
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "admin_c", cascade = CascadeType.ALL)
 	private List<Customer> customers;
-	
-	@OneToMany(mappedBy = "admin_r",cascade=CascadeType.ALL)
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "admin_r", cascade = CascadeType.ALL)
 	private List<Representative> representatives;
-	
-	@OneToMany(mappedBy = "admin_e",cascade=CascadeType.ALL)
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "admin_e", cascade = CascadeType.ALL)
 	private List<Employer> employers;
-	
-	@OneToMany(mappedBy = "admin_t",cascade=CascadeType.ALL)
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "admin_t", cascade = CascadeType.ALL)
 	private List<TaxForm> taxForm;
-	
-	@OneToMany(mappedBy = "admin_n",cascade=CascadeType.ALL)
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "admin_n", cascade = CascadeType.ALL)
 	private List<Notice> notices;
 
 	public String getEmail() {

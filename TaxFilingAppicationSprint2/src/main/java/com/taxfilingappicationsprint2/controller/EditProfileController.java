@@ -3,10 +3,14 @@ package com.taxfilingappicationsprint2.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.taxfilingappicationsprint2.entity.Admin;
@@ -17,190 +21,133 @@ import com.taxfilingappicationsprint2.service.EditProfileService;
 
 import io.swagger.annotations.ApiOperation;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class EditProfileController {
+	
+	Logger logger = LoggerFactory.getLogger(EditProfileController.class);
 
 	@Autowired
 	private EditProfileService es;
-	@PutMapping("/editCustomer/{id}/{editChoice}/{newValue}")
-	@ApiOperation("****1.Name  2.Email  3.Password  4.Pan Number  5.Contact Number  6. Bank Account Number  7.Marital Status  8.Address****")
-	public String upadteCustomer(@PathVariable("id")Long id,@PathVariable("editChoice")Integer choice,
-			@PathVariable("newValue")String newValue) {
-		
-		int i=0;
-		String[] res=new String[2];
-		Customer c=es.findCustomer(id);
-		
-		switch(choice) {	
-			case 1: c.setName(newValue);
-					i=es.updateCustomer(c);
-					res[0]="Name";res[1]=c.getName();
-					break;
-			case 2:	c.setEmail(newValue);
-					i=es.updateCustomer(c);
-					res[0]="Email";res[1]=c.getEmail();
-					break;	
-			case 3:	c.setPassword(newValue);
-					i=es.updateCustomer(c);
-					res[0]="Password";res[1]=c.getPassword();
-					break;	
-			case 4:	c.setPan(newValue);
-					i=es.updateCustomer(c);
-					res[0]="Pan";res[1]=c.getPan();
-					break;	
-			case 5:	c.setContactNo(newValue);
-					i=es.updateCustomer(c);
-					res[0]="Contact Number";res[1]=c.getContactNo();
-					break;	
-			case 6:	c.setAccountNo(newValue);
-					i=es.updateCustomer(c);
-					res[0]="Bank Account Number";res[1]=c.getAccountNo();
-					break;	
-			case 7:	c.setMaritalStatus(newValue);
-					i=es.updateCustomer(c);
-					res[0]="Marital Status";res[1]=c.getMaritalStatus();
-					break;	
-			case 8:	c.setAddress(newValue);
-					i=es.updateCustomer(c);
-					res[0]="Address";res[1]=c.getAddress();
-					break;	
-						
-		}
-		
 	
-	return "Your field "+res[0]+" with updated value is "+res[1];
+	
+	@PutMapping("updateCustomer/{id}")
+	public Customer updateCustomer(@RequestBody Customer customer, @PathVariable("id") long id){
+		Customer c = es.findCustomer(id);
+		c.setName(customer.getName());
+		c.setEmail(customer.getEmail());
+		c.setPassword(customer.getPassword());
+		c.setContactNo(customer.getContactNo());
+		c.setAccountNo(customer.getAccountNo());
+		c.setMaritalStatus(customer.getMaritalStatus());
+		c.setAddress(customer.getAddress());
+		
+		return es.updateCustomer(c);
 	}
-	
-	@PutMapping("/editEmployer/{id}/{editChoice}/{newValue}")
-	@ApiOperation("****1.Email  2.Password  3.Contact Number****")
-	public String upadteEmployer(@PathVariable("id")Long id,@PathVariable("editChoice")Integer choice,
-			@PathVariable("newValue")String newValue) {
 		
-		int i=0;
-		String res[]=new String[2];
-		Employer e=es.findEmployer(id);
+	@PutMapping("updateEmployer/{id}")
+	public Employer updateEmployer(@RequestBody Employer employer, @PathVariable("id") long id){
+		Employer emp = es.findEmployer(id);
+		emp.setEmail(employer.getEmail());
+		emp.setPassword(employer.getPassword());
+		emp.setContactNo(employer.getContactNo());
 		
-		switch(choice) {	
-			case 1:	e.setEmail(newValue);
-					i=es.updateEmployer(e);
-					res[0]="Email";res[1]=e.getEmail();	
-					break;	
-			case 2:	e.setPassword(newValue);
-					i=es.updateEmployer(e);
-					res[0]="Password";res[1]=e.getPassword();
-					break;	
-			case 3:	e.setContactNo(newValue);
-					i=es.updateEmployer(e);
-					res[0]="Contact Number";res[1]=e.getContactNo();
-					break;	
-			}
-	
-	return "Your field "+res[0]+" with updated value is "+res[1];
-	}
-	
-	@PutMapping("/editRepresentative/{id},{editChoice},{newValue}")
-	@ApiOperation(value="1.Name  2.Email  3.Password  4.Contact Number")
-	public String upadteRepresentative(@PathVariable("id")Long id,@PathVariable("editChoice")Integer choice,
-			@PathVariable("newValue")String newValue) {
-		
-		int i=0;
-		String res[]=new String[2];
-		Representative r=es.findRepresentative(id);
-		
-		switch(choice) {	
-			case 1: r.setName(newValue);
-					i=es.updateRepresentative(r);
-					res[0]="Name"; res[1]=r.getName();
-					break;
-			case 2:	r.setEmail(newValue);
-					i=es.updateRepresentative(r);
-					res[0]="Email"; res[1]=r.getEmail();
-					break;	
-			case 3:	r.setPassword(newValue);
-					i=es.updateRepresentative(r);
-					res[0]="Password"; res[1]=r.getPassword();
-					break;	
-			case 4:	r.setContactNo(newValue);
-					i=es.updateRepresentative(r);
-					res[0]="Contact Number"; res[1]=r.getContactNo();
-					break;	
-			}
-	
-	return "Your field "+res[0]+" with updated value is "+res[1];
-	}
-	
-	@PutMapping("/editAdmin/{id},{editChoice},{newValue}")
-	@ApiOperation(value="1.password")
-	public String upadteAdmin(@PathVariable("id")String id,@PathVariable("editChoice")Integer choice,
-			@PathVariable("newValue")String newValue) {
-		
-		int i=0;
-		String res[]=new String[2];
-		Admin a=es.findAdmin(id);
-		
-		switch(choice) {	
-			case 1: a.setPassword(newValue);
-					i=es.updateAdmin(a);
-					res[0]="Password";res[1]=a.getPassword();
-					break;
-		}
-	return "Your field "+res[0]+" with updated value is "+res[1];
+		return es.updateEmployer(emp);
 	}
 	
 	
+	@PutMapping("updateRepresentative/{id}")
+	public Representative updateRepresentative(@RequestBody Representative representative, @PathVariable("id") long id){
+		Representative rep = es.findRepresentative(id);
+		rep.setName(representative.getName());
+		rep.setEmail(representative.getEmail());
+		rep.setPassword(representative.getPassword());
+		rep.setContactNo(representative.getContactNo());
+		
+		return es.updateRepresentative(rep);
+	}
+	
+	@PutMapping("updateAdmin/{id}")
+	public Admin updateAdmin(@RequestBody Admin admin, @PathVariable("id") String id){
+		Admin a = es.findAdmin(id);
+		a.setPassword(admin.getPassword());
+		
+		return es.updateAdmin(a);
+	}
+
 	@PutMapping("/forgotPassword/{id},{userChoice},{questionChoice},{answer},{newPassword}")
-	@ApiOperation("****userChoice****=1.Customer 2.Employer 3.Representative   "+"****QuestionChoice****= "
+	@ApiOperation("User Choices: 1.Customer 2.Employer 3.Representative   " + "****QuestionChoice****= "
 			+ "1.what is your nickname?, 2.what is place of birth?, 3.What is your fathers name?")
 	public String forgotPassword(@PathVariable("id") String id, @PathVariable("userChoice") int choice,
-			@PathVariable("questionChoice") int questionChoice,@PathVariable("answer") String answer,@PathVariable("newPassword") String newPass){
-		
-		List<String> questions=Arrays.asList("1.what is your nickname?","2.what is place of birth?","3.What is your fathers name?");
-		int i=0;
-		String res="Sorry!! Question or answer is incorrect";
-		switch(choice) {
-		case 1: Customer c=es.findCustomer(Long.parseLong(id));
-				if(c.getSecurityQuestion().equalsIgnoreCase(questions.get(questionChoice-1)) && c.getSecurityAnswer().equals(answer)) {
-					c.setPassword(newPass);
-					i=es.updateCustomer(c);
-					res="Password resetted succesfully";
-				}
-				break;
-		case 2: Employer e=es.findEmployer(Long.parseLong(id));
-				if(e.getSecurityQuestion().equalsIgnoreCase(questions.get(questionChoice-1)) && e.getSecurityAnswer().equals(answer)) {
-					e.setPassword(newPass);
-					i=es.updateEmployer(e);
-					res="Password resetted succesfully";
-				}
-				break;
-		case 3: Representative r=es.findRepresentative(Long.parseLong(id));
-				if(r.getSecurityQuestion().equalsIgnoreCase(questions.get(questionChoice-1)) && r.getSecurityAnswer().equals(answer)) {
-					r.setPassword(newPass);
-					i=es.updateRepresentative(r);
-					res="Password resetted succesfully";
-				}
-				break;
+			@PathVariable("questionChoice") int questionChoice, @PathVariable("answer") String answer,
+			@PathVariable("newPassword") String newPass) {
+
+		List<String> questions = Arrays.asList("1.what is your nickname?", "2.what is place of birth?",
+				"3.What is your fathers name?");
+
+		String res = "Sorry!! Question or answer is incorrect";
+		switch (choice) {
+		case 1:
+			Customer c = es.findCustomer(Long.parseLong(id));
+			if (c.getSecurityQuestion().equalsIgnoreCase(questions.get(questionChoice - 1))
+					&& c.getSecurityAnswer().equals(answer)) {
+				c.setPassword(newPass);
+				es.updateCustomer(c);
+				res = "Password resetted succesfully";
+			}
+			break;
+		case 2:
+			Employer e = es.findEmployer(Long.parseLong(id));
+			if (e.getSecurityQuestion().equalsIgnoreCase(questions.get(questionChoice - 1))
+					&& e.getSecurityAnswer().equals(answer)) {
+				e.setPassword(newPass);
+				es.updateEmployer(e);
+				res = "Password resetted succesfully";
+			}
+			break;
+		case 3:
+			Representative r = es.findRepresentative(Long.parseLong(id));
+			if (r.getSecurityQuestion().equalsIgnoreCase(questions.get(questionChoice - 1))
+					&& r.getSecurityAnswer().equals(answer)) {
+				r.setPassword(newPass);
+				es.updateRepresentative(r);
+				res = "Password resetted succesfully";
+			}
+			break;
+		default:
+			return "Wrong choice entered!";
 		}
-	
-	return res;
-}
-	
+
+		return res;
+	}
 
 	@DeleteMapping("/removeActor/{userChoice}/{id}")
-	@ApiOperation("****Choice= 1.Customer 2.Employer  3.Representative****")
-	public String removeActor(@PathVariable("userChoice") int choice,@PathVariable("id") Long id) {
-		int i=0;
-		String res[]=new String[2];
-		switch(choice) {
-		case 1: i=es.removeCustomer(id);
-				res[0]="Customer";res[1]=Long.toString(id);
-				break;
-		case 2: i=es.removeEmployer(id);
-				res[0]="Employer";res[1]=Long.toString(id);	
-				break;
-		case 3: i=es.removeRepresentative(id);
-				res[0]="Representative";res[1]=Long.toString(id);	
-				break;
+	@ApiOperation("Choices: 1.Customer 2.Employer  3.Representative")
+	public String removeActor(@PathVariable("userChoice") int choice, @PathVariable("id") Long id) {
+		int i = 0;
+		String[] res = new String[2];
+		switch (choice) {
+		case 1:
+			i = es.removeCustomer(id);
+			res[0] = "Customer";
+			res[1] = Long.toString(id);
+			break;
+		case 2:
+			i = es.removeEmployer(id);
+			res[0] = "Employer";
+			res[1] = Long.toString(id);
+			break;
+		case 3:
+			i = es.removeRepresentative(id);
+			res[0] = "Representative";
+			res[1] = Long.toString(id);
+			break;
+		default:
+			return "Wrong choice entered!";
 		}
-		return res[0]+" with id "+res[1]+" has been deleted succesfully";
+		if (i == 1)
+			return res[0] + " with id " + res[1] + " has been deleted succesfully";
+		else
+			return "An error occured!";
 	}
 }

@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class Notice {
@@ -15,14 +17,17 @@ public class Notice {
 	private long noticeId;
 	private String noticeBody;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "customerId")
 	private Customer customer;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "representativeId_n")
 	private Representative representative_n;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "email_n")
 	private Admin admin_n;

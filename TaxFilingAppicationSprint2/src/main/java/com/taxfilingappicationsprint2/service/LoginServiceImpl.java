@@ -17,30 +17,33 @@ public class LoginServiceImpl implements LoginService{
 
 	@Autowired
 	CustomerRepository customerRepo;
+
 	@Autowired
 	EmployerRepository employerRepo;
+
 	@Autowired
-	RepresentativeRepository repRepo;
+	RepresentativeRepository representativeRepo;
+
 	@Autowired
 	AdminRepository adminRepo;
-	
+
 	@Override
-	public Customer loginCustomer(Long customerId,String password) {
-		return customerRepo.loginCustomer(customerId,password);
+	public Customer loginCustomer(Long customerId, String password) {
+		return customerRepo.loginCustomer(customerId, password);
 	}
 
 	@Override
 	public Employer loginEmployer(long id, String password) {
-		return employerRepo.loginEmployer(id,password);
+		return employerRepo.loginEmployer(id, password);
 	}
 
 	@Override
 	public Representative loginRepresentative(long id, String password) {
-		return repRepo.loginRepresentative(id,password);
+		return representativeRepo.loginRepresentative(id, password);
 	}
 
 	@Override
 	public Admin loginAdmin(String id, String password) {
-		return adminRepo.loginAdmin(id,password);
+		return adminRepo.loginAdmin(id, password);
 	}
 }
