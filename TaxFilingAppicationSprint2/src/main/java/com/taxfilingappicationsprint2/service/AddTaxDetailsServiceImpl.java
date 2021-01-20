@@ -18,6 +18,11 @@ public class AddTaxDetailsServiceImpl implements AddTaxDetailsService {
 
 	@Autowired
 	CustomerRepository customerRepo;
+	
+	@Override
+    public Customer getCustomerById(long customerId) {
+        return customerRepo.getCustById(customerId);
+    }
 
 	@Override
 	public int addTaxDetailsForEmployeeService(TaxForm objTaxForm) {

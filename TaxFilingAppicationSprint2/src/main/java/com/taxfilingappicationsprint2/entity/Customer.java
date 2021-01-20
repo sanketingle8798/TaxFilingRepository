@@ -36,7 +36,7 @@ public class Customer {
 	private String name;
 
 	@NotNull(message = "Email can not be empty")
-	//@Column(unique = true)
+	@Column(unique = true)
 	@Email(message = "Enter valid email id")
 	private String email;
 

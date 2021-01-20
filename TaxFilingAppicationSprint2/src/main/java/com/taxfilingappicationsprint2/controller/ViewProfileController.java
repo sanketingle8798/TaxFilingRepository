@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.taxfilingappicationsprint2.entity.Admin;
 import com.taxfilingappicationsprint2.entity.Customer;
 import com.taxfilingappicationsprint2.entity.Employer;
 import com.taxfilingappicationsprint2.entity.Representative;
@@ -39,6 +40,12 @@ public class ViewProfileController {
 		return viewProfileService.viewRepresentativeProfile(representativeId);
 	}
 	
+	@GetMapping("/viewAdminProfile/{adminId}")
+	public Admin viewAdminProfile(@PathVariable("adminId") String adminId) {
+		return viewProfileService.viewAdminProfile(adminId);
+	}
+	
+	
 	@GetMapping("/viewAllCustomers")
 	public List<Customer> viewAllCustomers() {
 		return viewProfileService.viewAllCustomers();
@@ -54,6 +61,12 @@ public class ViewProfileController {
 		return viewProfileService.viewAllRepresentatives();
 	}
 	
+	
+	@GetMapping("/viewAllEmployeesByOrganization/{employerId}")
+	public List<Customer> viewAllEmployeesByOrganization(@PathVariable("employerId") long employerId) {
+		Employer emp= viewProfileService.viewEmployerProfile(employerId);
+		return viewProfileService.viewAllEmployeesByOrganization(emp);
+	}
 	
 	
 }

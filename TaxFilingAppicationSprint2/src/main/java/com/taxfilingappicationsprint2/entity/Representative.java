@@ -31,7 +31,7 @@ public class Representative {
 	private String name;
 
 	@NotNull
-	//@Column(unique = true)
+	@Column(unique = true)
 	@Email(message = "Email can not be empty")
 	private String email;
 

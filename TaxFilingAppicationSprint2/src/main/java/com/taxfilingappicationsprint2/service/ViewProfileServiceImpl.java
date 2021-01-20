@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.taxfilingappicationsprint2.Exception.EntityNotFoundException;
+import com.taxfilingappicationsprint2.entity.Admin;
 import com.taxfilingappicationsprint2.entity.Customer;
 import com.taxfilingappicationsprint2.entity.Employer;
 import com.taxfilingappicationsprint2.entity.Representative;
+import com.taxfilingappicationsprint2.repository.AdminRepository;
 import com.taxfilingappicationsprint2.repository.CustomerRepository;
 import com.taxfilingappicationsprint2.repository.EmployerRepository;
 import com.taxfilingappicationsprint2.repository.RepresentativeRepository;
@@ -24,6 +26,9 @@ public class ViewProfileServiceImpl implements ViewProfileService {
 
 	@Autowired
 	private RepresentativeRepository representativeRepo;
+
+	@Autowired
+	private AdminRepository adminRepo;
 
 	@Override
 	public Customer viewCustomerProfile(Long customerId) {
@@ -47,9 +52,18 @@ public class ViewProfileServiceImpl implements ViewProfileService {
 	public Representative viewRepresentativeProfile(Long representativeId) {
 		Representative r = representativeRepo.findById(representativeId).orElse(null);
 		if (r == null)
-			throw new EntityNotFoundException("Wrong id", "Customer with id: " + representativeId + " doesn't exists",
+			throw new EntityNotFoundException("Wrong id", "Representative with id: " + representativeId + " doesn't exists",
 					"Recheck id", "Check list of Representaives", "Reach out to ithelpdesk@taxportal.com");
 		return r;
+	}
+	
+	@Override
+	public Admin viewAdminProfile(String adminId) {
+		Admin admin = adminRepo.findById(adminId).orElse(null);
+		if (admin == null)
+			throw new EntityNotFoundException("Wrong id", "Admin with id: " + adminId + " doesn't exists",
+					"Recheck id", "Check list of Representaives", "Reach out to ithelpdesk@taxportal.com");
+		return admin;
 	}
 
 	@Override
@@ -66,4 +80,13 @@ public class ViewProfileServiceImpl implements ViewProfileService {
 	public List<Representative> viewAllRepresentatives() {
 		return representativeRepo.findAll();
 	}
+
+	
+	@Override
+	public List<Customer> viewAllEmployeesByOrganization(Employer emp) {
+		
+		return customerRepo.viewAllEmployeesByOrganization(emp);
+	}
+
+	
 }

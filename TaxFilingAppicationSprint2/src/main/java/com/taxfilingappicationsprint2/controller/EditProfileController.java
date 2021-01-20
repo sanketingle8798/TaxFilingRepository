@@ -75,17 +75,19 @@ public class EditProfileController {
 		return es.updateAdmin(a);
 	}
 
-	@PutMapping("/forgotPassword/{id},{userChoice},{questionChoice},{answer},{newPassword}")
+	@PutMapping("/forgotPassword/{id}/{userChoice}/{questionChoice}/{answer}/{newPassword}")
 	@ApiOperation("User Choices: 1.Customer 2.Employer 3.Representative   " + "****QuestionChoice****= "
 			+ "1.what is your nickname?, 2.what is place of birth?, 3.What is your fathers name?")
 	public String forgotPassword(@PathVariable("id") String id, @PathVariable("userChoice") int choice,
 			@PathVariable("questionChoice") int questionChoice, @PathVariable("answer") String answer,
 			@PathVariable("newPassword") String newPass) {
 
+		System.out.println("in forgot");
 		List<String> questions = Arrays.asList("1.what is your nickname?", "2.what is place of birth?",
 				"3.What is your fathers name?");
 
 		String res = "Sorry!! Question or answer is incorrect";
+		try {
 		switch (choice) {
 		case 1:
 			Customer c = es.findCustomer(Long.parseLong(id));
@@ -116,6 +118,10 @@ public class EditProfileController {
 			break;
 		default:
 			return "Wrong choice entered!";
+		}
+		}
+		catch(Exception e) {
+			res="Id does not match with our database!!!";
 		}
 
 		return res;
